@@ -1,5 +1,4 @@
 import flet
-from flet import app
 import math
 
 def main(page: flet.Page):
@@ -251,4 +250,4 @@ def main(page: flet.Page):
 
 # 🍊 Se corrigió la sintaxis y se alineó por completo al ras izquierdo
 if __name__ == "__main__":
-    app(target=main)
+    flet.app(target=main)
