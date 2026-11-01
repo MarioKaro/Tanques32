@@ -1,9 +1,7 @@
 import flet
 import math
-from flet import app
 
 def main(page: flet.Page):
-    # Configuración de ventana compacta y estética para entorno móvil
     page.title = "Medidas Para Tanques De Combustible"
     page.window_width = 380
     page.window_height = 680
@@ -186,7 +184,6 @@ def main(page: flet.Page):
             content=flet.Column([
                 flet.Text("Medidas Para Tanques de Combustible", size=18, weight=flet.FontWeight.BOLD, color="#2196F3", text_align=flet.TextAlign.CENTER),
                 
-                # Bloque 1: Configuración de Volumen
                 flet.Card(
                     content=flet.Container(
                         content=flet.Column([
@@ -204,7 +201,6 @@ def main(page: flet.Page):
                     )
                 ),
                 
-                # Bloque 2: Configuración del Área de Dique
                 flet.Card(
                     content=flet.Container(
                         content=flet.Column([
@@ -218,7 +214,6 @@ def main(page: flet.Page):
                     )
                 ),
                 
-                # Bloque 3: Resultados Requeridos
                 flet.Card(
                     content=flet.Container(
                         content=flet.Column([
@@ -230,25 +225,13 @@ def main(page: flet.Page):
                     )
                 ),
                 
-                # Bloque 3: Resultados Requeridos
-                flet.Card(
-                    content=flet.Container(
-                        content=flet.Column([
-                            flet.Text("3. Resultados de Retención", weight=flet.FontWeight.BOLD, size=14, color="#4CAF50"),
-                            entry_vr,
-                            entry_hv,
-                        ], spacing=10),
-                        padding=12
-                    )
-                ),
-                
-                # Botones de Acción
                 flet.Row([btn_calcular, btn_limpiar], alignment=flet.MainAxisAlignment.CENTER, spacing=15),
             ], spacing=15, horizontal_alignment=flet.CrossAxisAlignment.STRETCH),
             width=360
         )
     )
 
-# 🍊 Se corrigió la sintaxis y se alineó por completo al ras izquierdo
+# 🍊 Definición explícita requerida por el motor móvil de Flet
+app = flet.app
 if __name__ == "__main__":
     app(target=main)
