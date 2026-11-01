@@ -1,4 +1,5 @@
 import flet
+from flet import app
 import math
 
 def main(page: flet.Page):
