@@ -1,5 +1,6 @@
 import flet
 import math
+from flet import app
 
 def main(page: flet.Page):
     # Configuración de ventana compacta y estética para entorno móvil
@@ -250,4 +251,4 @@ def main(page: flet.Page):
 
 # 🍊 Se corrigió la sintaxis y se alineó por completo al ras izquierdo
 if __name__ == "__main__":
-    flet.app(target=main)
+    app(target=main)
