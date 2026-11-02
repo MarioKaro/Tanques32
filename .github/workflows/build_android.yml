@@ -42,19 +42,17 @@ jobs:
         rm -rf build
         find . -type d -name "__pycache__" -exec rm -rf {} +
 
-    # 🍊 Inicializamos el cascarón de Flutter nativo como lo hace Flet
+    # 🍊 Inicializamos el cascarón directamente en la carpeta build/flutter
     - name: Crear Estructura Base de la App
       run: |
-        flet create app_dir
         mkdir -p build/flutter
-        cp -r app_dir/* build/flutter/ || true
-        rm -rf app_dir
+        flet create build/flutter
 
-    # 🍊 Empaquetamos de forma local con Dart Run para saltarnos el bloqueo del ejecutable global
+    # 🍊 Empaquetamos de forma local con Dart Run asegurando que pubspec.yaml exista
     - name: Empaquetar Fuentes de Python
       run: |
         cd build/flutter
-        # Agregamos serious_python localmente al proyecto de Flutter
+        # Agregamos serious_python localmente al proyecto de Flutter recién creado
         dart pub add serious_python
         
         # Preparamos la carpeta intermedia con tu código fuente de Tanques
@@ -76,6 +74,7 @@ jobs:
       with:
         name: app-tanques-release
         path: build/flutter/build/app/outputs/flutter-apk/*.apk
+
 
 
 
