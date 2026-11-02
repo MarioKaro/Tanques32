@@ -32,20 +32,22 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # 🍊 Aceptamos formalmente todas las licencias del SDK de Android en la ruta del servidor
+    # 🍊 Firmamos legalmente todas las licencias del SDK de Android antes del proceso
     - name: Aceptar Licencias de Android Oficiales
       run: |
         yes | "$ANDROID_HOME"/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
+    # 🍊 Usamos el comando doble para forzar a Flet a avanzar sin pedir confirmaciones por consola
     - name: Compilar la APK con Flet
       run: |
-        flet build apk
+        flet build apk --yes --no-interactive
 
     - name: Guardar la aplicación compilada
       uses: actions/upload-artifact@v4
       with:
         name: app-tanques-release
         path: build/apk/*.apk
+
 
 
 
