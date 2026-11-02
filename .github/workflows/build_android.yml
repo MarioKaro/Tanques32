@@ -39,9 +39,19 @@ jobs:
 
     - name: Build APK
       run: |
-        echo "y" | flet build apk --python-version 3.12 --no-config
+        # 🍊 Movemos temporalmente el archivo para que Flet compile sin interferencia de dependencias pesadas
+        if [ -f requirements.txt ]; then mv requirements.txt requirements.txt.bak; fi
+        
+        yes | flet build apk --python-version 3.12
+        
+        # 🍊 Restauramos el archivo a su estado original
+        if [ -f requirements.txt.bak ]; then mv requirements.txt.bak requirements.txt; fi
 
-
+    - name: Guardar la aplicación compilada
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-tanques-release
+        path: build/apk/*.apk
 
 
 
