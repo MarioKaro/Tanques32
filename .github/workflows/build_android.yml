@@ -37,16 +37,17 @@ jobs:
       run: |
         yes | flutter doctor --android-licenses
 
+    # 🍊 Eliminación física total de residuos antes de que Flet toque el proyecto
+    - name: Limpieza Drástica de Espacio de Trabajo
+      run: |
+        rm -rf build
+        rm -rf .pytest_cache
+        rm -rf __pycache__
+        find . -name "*.pyc" -delete
+
     - name: Build APK
       run: |
-        # 🍊 Forzamos la exclusión drástica de carpetas de caché y archivos basura para que compile limpio
-        yes | flet build apk --python-version 3.12 --exclude build --exclude venv --exclude .venv --exclude *.db --exclude *.sqlite
-
-    - name: Guardar la aplicación compilada
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-tanques-release
-        path: build/apk/*.apk
+        yes | flet build apk --python-version 3.12
 
 
 
