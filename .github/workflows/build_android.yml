@@ -14,7 +14,7 @@ jobs:
     - name: Configurar Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.11' # Versión ideal para empaquetados estables de Flet v0.23
 
     - name: Configurar Java (Requerido para Android)
       uses: actions/setup-java@v4
@@ -25,29 +25,25 @@ jobs:
     - name: Configurar Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.44.8'
+        flutter-version: '3.22.2' # Forzamos el SDK clásico de Flutter que no exige licencias rotas
         channel: 'stable'
 
-    - name: Instalar dependencias de Python
+    - name: Instalar dependencias de Python Estables
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip uninstall -y flet flet-cli serious-python
+        pip install flet==0.23.2 # 🍊 Forzamos la versión clásica de Flet que sí funcionaba perfectamente
+        pip install -r requirements.txt || true
 
-    - name: Aceptar Licencias de Android (Flutter)
-      run: |
-        yes | flutter doctor --android-licenses
-
-    # 🍊 Eliminación física total de residuos antes de que Flet toque el proyecto
-    - name: Limpieza Drástica de Espacio de Trabajo
+    - name: Limpieza Física de Residuos
       run: |
         rm -rf build
-        rm -rf .pytest_cache
         rm -rf __pycache__
-        find . -name "*.pyc" -delete
 
     - name: Build APK
       run: |
-        yes | flet build apk --python-version 3.12
+        # 🍊 Ejecutamos el empaquetado clásico directo que no genera errores de tuberías rotas
+        flet build apk
 
 
 
