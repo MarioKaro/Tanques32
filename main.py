@@ -233,7 +233,8 @@ def main(page: flet.Page):
 
 # 🍊 Se asigna explícitamente el alias de la app antes de la ejecución del script principal
 if __name__ == "__main__":
-    import flet.version
-    flet.app(target=main)
+    from flet import app as flet_app
+    flet_app(target=main)
+
 )
 
