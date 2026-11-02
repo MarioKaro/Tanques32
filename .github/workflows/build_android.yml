@@ -57,8 +57,8 @@ jobs:
         cp -r ../../* app/ 2>/dev/null || true
         rm -rf app/build app/.git app/.github app/venv app/.venv
         
-        # 🍊 Cambiamos 'android' por 'Android' con mayúscula inicial
-        dart run serious_python:main package app --platform Android --python-version 3.12
+        # 🍊 Usamos la bandera corta exacta -p con la mayúscula correspondiente
+        dart run serious_python:main package app -p Android --python-version 3.12 -r ../../requirements.txt
 
     - name: Compilar APK con Flutter Nativo
       run: |
