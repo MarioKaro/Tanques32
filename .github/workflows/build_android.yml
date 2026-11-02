@@ -39,7 +39,13 @@ jobs:
 
     - name: Build APK
       run: |
-        flet build apk --python-version 3.12 --verbose
+        flet build apk --python-version 3.12 --no-config
+
+    - name: Guardar la aplicación compilada
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-tanques-release
+        path: build/apk/*.apk
 
 
 
