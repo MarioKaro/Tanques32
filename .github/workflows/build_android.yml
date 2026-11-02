@@ -32,16 +32,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # 🍊 Comando moderno y directo para compilar la APK sin bloqueos de licencias
+    # 🍊 Aceptamos las licencias del SDK de Android antes de compilar
+    - name: Aceptar Licencias de Android
+      run: |
+        yes | sdkmanager --licenses || true
+
+    # 🍊 Forzamos a Flet a usar el comando con aprobación de licencias automática
     - name: Compilar la APK con Flet
       run: |
-        flet build apk
+        flet build apk --yes
 
-    - name: Guardar la aplicación compilada
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-tanques-release
-        path: build/apk/*.apk
 
   
    
