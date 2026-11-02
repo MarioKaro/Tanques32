@@ -39,7 +39,8 @@ jobs:
         pip install -r requirements.txt
 
     - name: Build APK
-      run: flet build apk --no-interactive # 🍊 Tu comando no interactivo ya está listo
+      run: |
+        yes | flet build apk # 🍊 Tu comando no interactivo ya está listo
 
     - name: Guardar la aplicación compilada
       uses: actions/upload-artifact@v4
