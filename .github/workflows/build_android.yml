@@ -42,30 +42,30 @@ jobs:
         rm -rf build
         find . -type d -name "__pycache__" -exec rm -rf {} +
 
-    # 🍊 Inicializamos la estructura de Flutter de forma nativa tal como lo hace Flet
+    # 🍊 Inicializamos el cascarón de Flutter nativo como lo hace Flet
     - name: Crear Estructura Base de la App
       run: |
         flet create app_dir
-        # Movemos los archivos generados a la raíz de compilación esperada
         mkdir -p build/flutter
         cp -r app_dir/* build/flutter/ || true
         rm -rf app_dir
 
-    # 🍊 Empaquetamos el código de Python usando Dart directamente para evitar el bug de Flet-cli
+    # 🍊 Empaquetamos de forma local con Dart Run para saltarnos el bloqueo del ejecutable global
     - name: Empaquetar Fuentes de Python
       run: |
         cd build/flutter
-        dart pub global activate serious_python
-        # Agregamos la ruta de dart al PATH del entorno actual
-        export PATH="$PATH":"$HOME/.pub-cache/bin"
-        # Movemos tu código fuente al directorio temporal de empaquetado móvil, ignorando residuos
+        # Agregamos serious_python localmente al proyecto de Flutter
+        dart pub add serious_python
+        
+        # Preparamos la carpeta intermedia con tu código fuente de Tanques
         mkdir -p app
-        cp -r ../../../* app/ 2>/dev/null || true
+        cp -r ../../* app/ 2>/dev/null || true
         rm -rf app/build app/.git app/.github app/venv app/.venv
-        # Compilamos las fuentes de forma manual
-        dart pub global run serious_python:main package app
+        
+        # Ejecutamos el empaquetador de manera local dentro del entorno permitido
+        dart run serious_python:main package app
 
-    # 🍊 Compilación final usando el motor nativo de Google que nos dará el log detallado si falla
+    # 🍊 Compilación final limpia que nos arrojará el APK listo
     - name: Compilar APK con Flutter Nativo
       run: |
         cd build/flutter
@@ -76,6 +76,7 @@ jobs:
       with:
         name: app-tanques-release
         path: build/flutter/build/app/outputs/flutter-apk/*.apk
+
 
 
 
