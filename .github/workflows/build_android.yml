@@ -42,13 +42,11 @@ jobs:
         rm -rf build
         find . -type d -name "__pycache__" -exec rm -rf {} +
 
-    # 🍊 Creamos la estructura base usando un nombre válido que no choque con el SDK
     - name: Crear Estructura Base de la App (Flutter)
       run: |
         mkdir -p build
         flutter create --platforms=android build/tanques_app
 
-    # 🍊 Añadimos y empaquetamos las fuentes de Python localmente dentro del nuevo directorio
     - name: Empaquetar Fuentes de Python
       run: |
         cd build/tanques_app
@@ -59,10 +57,9 @@ jobs:
         cp -r ../../* app/ 2>/dev/null || true
         rm -rf app/build app/.git app/.github app/venv app/.venv
         
-        # Ejecutamos el empaquetador dentro del entorno del proyecto móvil
-        dart run serious_python:main package app
+        # 🍊 Agregamos los argumentos obligatorios de plataforma y versión para empaquetar de forma correcta
+        dart run serious_python:main package app --platform android --python-version 3.12
 
-    # 🍊 Compilación nativa directa sin intermediarios de flet-cli
     - name: Compilar APK con Flutter Nativo
       run: |
         cd build/tanques_app
@@ -73,6 +70,7 @@ jobs:
       with:
         name: app-tanques-release
         path: build/tanques_app/build/app/outputs/flutter-apk/*.apk
+
 
 
 
