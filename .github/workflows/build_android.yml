@@ -40,7 +40,7 @@ jobs:
 
     - name: Build APK
       run: |
-        yes | flet build apk # 🍊 Tu comando no interactivo ya está listo
+        yes | flet build apk
 
     - name: Guardar la aplicación compilada
       uses: actions/upload-artifact@v4
