@@ -28,7 +28,7 @@ jobs:
         flutter-version: '3.44.8'
         channel: 'stable'
 
-    - name: Instalar dependencias de Python
+    - name: Instalar dependencias de Python en el Servidor
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -37,9 +37,20 @@ jobs:
       run: |
         yes | flutter doctor --android-licenses
 
+    # 🍊 Renombrar temporalmente para evitar que Flet intente meter paquetes incompatibles al APK
+    - name: Aislar Requirements
+      run: |
+        if [ -f requirements.txt ]; then mv requirements.txt temp_requirements.txt; fi
+
     - name: Build APK
       run: |
         echo "y" | flet build apk --python-version 3.12
+
+    # 🍊 Restaurar el archivo para que tu repositorio no quede modificado
+    - name: Restaurar Requirements
+      if: always()
+      run: |
+        if [ -f temp_requirements.txt ]; then mv temp_requirements.txt requirements.txt; fi
 
     - name: Guardar la aplicación compilada
       uses: actions/upload-artifact@v4
