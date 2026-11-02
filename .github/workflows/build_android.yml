@@ -25,23 +25,28 @@ jobs:
     - name: Configurar Flutter
       uses: subosito/flutter-action@v2
       with:
+        flutter-version: '3.44.8' # 🍊 Forzamos la versión exacta que te pide Flet
         channel: 'stable'
+
+    # 🍊 Aceptar licencias de Android de forma automática para evitar bloqueos silenciosos
+    - name: Aceptar Licencias de Android
+      run: |
+        yes | sdkmanager --licenses || true
 
     - name: Instalar dependencias de Python
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # 🍊 Comando limpio oficial para Flet en servidores que autoconfigura el SDK
-    - name: Compilar la APK con Flet
-      run: |
-        flet build apk
+    - name: Build APK
+      run: flet build apk --no-interactive # 🍊 Tu comando no interactivo ya está listo
 
     - name: Guardar la aplicación compilada
       uses: actions/upload-artifact@v4
       with:
         name: app-tanques-release
         path: build/apk/*.apk
+
 
 
 
