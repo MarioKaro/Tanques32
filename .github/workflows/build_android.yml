@@ -57,12 +57,9 @@ jobs:
         cp -r ../../* app/ 2>/dev/null || true
         rm -rf app/build app/.git app/.github app/venv app/.venv
         
-        # Como solo necesitas el núcleo de Flet (incluido en serious_python),
-        # creamos un archivo requirements.txt vacío para que el empaquetador prosiga limpio.
-        touch ./requirements.txt
-        
-        # Ejecutamos el empaquetado apuntando al archivo vacío
-        dart run serious_python:main package app -p Android --requirements="requirements.txt"
+        # Omitimos el uso de archivos requirements externos ya que no usas librerías de terceros adicionales.
+        # Al quitar el argumento --requirements, serious_python empaqueta tu código base sin intentar llamadas fallidas a pip.
+        dart run serious_python:main package app -p Android
 
     - name: Compilar APK con Flutter Nativo
       run: |
@@ -74,6 +71,7 @@ jobs:
       with:
         name: app-tanques-release
         path: build/tanques_app/build/app/outputs/flutter-apk/*.apk
+
 
 
 
