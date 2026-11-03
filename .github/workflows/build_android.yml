@@ -57,8 +57,11 @@ jobs:
         cp -r ../../* app/ 2>/dev/null || true
         rm -rf app/build app/.git app/.github app/venv app/.venv
         
-        # Omitimos el uso de archivos requirements externos ya que no usas librerías de terceros adicionales.
-        # Al quitar el argumento --requirements, serious_python empaqueta tu código base sin intentar llamadas fallidas a pip.
+        # Generamos la carpeta de assets nativa requerida por Android
+        mkdir -p android/app/src/main/assets
+        
+        # 🚀 Configuramos la variable de entorno obligatoria para serious_python y empaquetamos
+        export SERIOUS_PYTHON_APP=android/app/src/main/assets/app
         dart run serious_python:main package app -p Android
 
     - name: Compilar APK con Flutter Nativo
@@ -71,6 +74,7 @@ jobs:
       with:
         name: app-tanques-release
         path: build/tanques_app/build/app/outputs/flutter-apk/*.apk
+
 
 
 
