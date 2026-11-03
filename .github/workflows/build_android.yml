@@ -57,8 +57,8 @@ jobs:
         cp -r ../../* app/ 2>/dev/null || true
         rm -rf app/build app/.git app/.github app/venv app/.venv
         
-        # 🍊 Corregimos el argumento pasándolo de forma explícita con la sintaxis nativa de pip requerida internamente
-        dart run serious_python:main package app -p Android --python-version 3.12 --requirements="-r ../../requirements.txt"
+        # Se elimina el flag --python-version 3.12 para evitar que rompa la URL de python-build-standalone
+        dart run serious_python:main package app -p Android --requirements="-r ../../requirements.txt"
 
     - name: Compilar APK con Flutter Nativo
       run: |
@@ -70,6 +70,7 @@ jobs:
       with:
         name: app-tanques-release
         path: build/tanques_app/build/app/outputs/flutter-apk/*.apk
+
 
 
 
